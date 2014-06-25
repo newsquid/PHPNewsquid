@@ -5,6 +5,6 @@ function nsq_test_autoload($class_name) {
         require_once "src/$class_name.php";
 }
 
-spl_autoload_register(nsq_test_autoload);
+spl_autoload_register("nsq_test_autoload");
 
 ?>
