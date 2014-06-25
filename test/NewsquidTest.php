@@ -7,6 +7,14 @@
  */
 class NewsquidTest extends PHPUnit_Framework_TestCase {
     
+    /**
+     * @expectedException ProductNotFoundException
+     */
+    public function test_NoServer_Connect() {
+        $nsq = new Newsquid("http://no.serv.er.exists.lol", "nil", "nil");
+        $nsq->getProduct(1);
+    }
+
     public function testGetAllUsers() {
         $nsq = new Newsquid("https://localhost:1337", "uid_test", "secret_test");
         

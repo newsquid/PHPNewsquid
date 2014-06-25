@@ -11,7 +11,11 @@ class Newsquid {
         $this->secret = $secret;
     }
 
-    public function getArticles($user_token) {
+    public function getProducts($user_token) {
+        throw new Exception("Not implemented");
+    }
+
+    public function getProduct($id) {
         throw new Exception("Not implemented");
     }
 
@@ -19,7 +23,7 @@ class Newsquid {
         throw new Exception("Not implemented");
     }
 
-    public function getUserById($id) {
+    public function getUser($id) {
         throw new Exception("Not implemented");
     }
 
