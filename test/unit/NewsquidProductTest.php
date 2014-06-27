@@ -54,7 +54,26 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_ProductSync_ChangedOneThing() {
+        global $data_put;
+        $data_put = array();
 
+        $grabbing_caller = new MockRemoteCaller(array(
+            "put" => function($path, $data) {
+                global $data_put;
+                $data_put = $data;
+            }
+        ));
+
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $grabbing_caller);
+
+        $prod->title = "Hello, World";
+
+        $prod->sync();
+
+        $this->assertNotEmpty($data_put);
+        $this->assertNotEmpty($data_put["product"]);
+        $this->assertArrayHasKey("title", $data_put["product"]);
+        $this->assertContains("Hello, World", $data_put["product"]);
     }
 
     public function test_ProductSync_ChangedEverything() {
