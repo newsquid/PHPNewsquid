@@ -5,7 +5,7 @@
  * and as such requires a fake backend to exist.
  * This version relies on nsqor to be running on :1337 
  */
-class IntegrationTest extends PHPUnit_Framework_TestCase {
+class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
     
     /**
      * @expectedException RemoteCallerException

@@ -51,6 +51,12 @@ class CurlRemoteCaller implements RemoteCaller {
         return $this->handleResult($call_url, $this->curl->raw_response);
     }
 
+    public function put($path, $data = array()) {
+        $call_url = ($this->base_url)."/".$path;
+        $this->curl->put($call_url, $data);
+        return $this->handleResult($call_url, $this->curl->raw_response);
+    }
+
     private function handleResult($call_url, $result) {
         if($this->curl->error) {
             if($this->curl->curl_error) {
