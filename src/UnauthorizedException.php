@@ -1,6 +1,6 @@
 <?php
 
-class UnauthorizedException extends Exception {
+class UnauthorizedException extends RemoteCallerException {
     public function __construct($msg) {
         parent::__construct($msg);
     }

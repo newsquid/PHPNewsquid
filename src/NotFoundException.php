@@ -1,6 +1,6 @@
 <?php
 
-class NotFoundException extends Exception {
+class NotFoundException extends RemoteCallerException {
     public function __construct($msg) {
         parent::__construct($msg);
     }

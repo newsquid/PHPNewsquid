@@ -1,6 +1,6 @@
 <?php
 
-class ServerErrorException extends Exception {
+class ServerErrorException extends RemoteCallerException {
     public function __construct($msg) {
         parent::__construct($msg);
     }

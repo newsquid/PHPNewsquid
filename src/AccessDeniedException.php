@@ -1,6 +1,6 @@
 <?php
 
-class AccessDeniedException extends Exception {
+class AccessDeniedException extends RemoteCallerException {
 
     public function __construct($msg) {
         parent::__construct($msg);
