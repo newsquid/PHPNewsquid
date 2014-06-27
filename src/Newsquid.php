@@ -15,11 +15,33 @@ class Newsquid {
         throw new Exception("Not implemented");
     }
 
+    public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
+        $result = $this->newsquid_caller->post("products", array(
+            "product" => array(
+                "sku" => $id,
+                "url" => $url,
+                "currency" => $currency,
+                "price" => $price,
+                "title" => $title
+            ),
+            "access_token" => $user->token
+        ));
+
+        return new NewsquidProduct(
+            $id,
+            $title,
+            $price,
+            $currency,
+            $url
+        );
+    }
+
     public function getProduct($id) {
         $result = $this->newsquid_caller->get("products/$id");
 
         $data = json_decode($result);
         return new NewsquidProduct(
+            $id,
             $data->title,
             $data->price,
             $data->currency,
