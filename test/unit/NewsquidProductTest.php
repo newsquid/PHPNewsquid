@@ -36,7 +36,21 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_ProductSync_NothingChanged() {
+        global $put_called;
+        $put_called = false;
 
+        $monitoring_caller = new MockRemoteCaller(array(
+            "put" => function($path, $data) {
+                global $put_called;
+                $put_called = true;
+            }
+        ));
+
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $monitoring_caller);
+
+        $prod->sync();
+
+        $this->assertFalse($put_called);
     }
 
     public function test_ProductSync_ChangedOneThing() {

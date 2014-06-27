@@ -49,15 +49,17 @@ class NewsquidProduct {
                 $to_sync[$key] = $this->$key;
         }
 
-        $data = array(
-            "product" => $to_sync,
-            "access_token" => $this->owner->token
-        );
+        if(!empty($to_sync)) {
+            $data = array(
+                "product" => $to_sync,
+                "access_token" => $this->owner->token
+            );
 
-        $this->newsquid_caller->put("products/{$this->id}", $data);
+            $this->newsquid_caller->put("products/{$this->id}", $data);
 
-        foreach($to_sync as $key => $val)
-            $this->last_synced[$key] = $val;
+            foreach($to_sync as $key => $val)
+                $this->last_synced[$key] = $val;
+        }
     }
 }
 
