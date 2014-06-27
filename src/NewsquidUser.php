@@ -31,7 +31,12 @@ class NewsquidUser {
     }
 
     public function canAccessProduct(NewsquidProduct $product) {
-        $result = $this->newsquid_caller->get("consumer/access/{$product->id}?access_token={$this->token}");
+        try {
+            $result = $this->newsquid_caller->get("consumer/access/{$product->id}?access_token={$this->token}");
+        }
+        catch(PaymentRequiredException $e) {
+            return false;
+        }
 
         $data = json_decode($result);
         return $data->access;

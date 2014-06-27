@@ -66,6 +66,8 @@ class CurlRemoteCaller implements RemoteCaller {
                 switch($this->curl->error_code) {
                     case 401:
                         throw new UnauthorizedException("Unauthorized access on $call_url.\nReturned:\n".substr($result,0,100)."...");
+                    case 402:
+                        throw new PaymentRequiredException("Payment required to access content at $call_url.\nReturned:\n".substr($result,0,100)."...");
                     case 404:
                         throw new NotFoundException("Request not found: $call_url.\nReturned:\n".substr($result,0,100)."...");
                     default:

@@ -45,7 +45,7 @@ class NewsquidUserTest extends PHPUnit_Framework_TestCase {
                 global $path_get;
                 $path_get = $path;
 
-                return '{"reason":"no", "price": "10.0", "currency":"USD","access":false}';
+                throw new PaymentRequiredException("Need payment to access");
             }
         ));
 
