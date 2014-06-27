@@ -15,15 +15,16 @@ class CurlRemoteCaller implements RemoteCaller {
     public function __set($name, $value) {
         if($name == "user" || $name == "password" || $name == "insecure")
             $this->$name = $value;
+
+        $this->base_url = http_build_url(($this->base_url), array(
+            "user" => $this->user,
+            "pass" => $this->password
+        ));
     }
 
     public function get($path) {
-        $call_url = http_build_url(($this->base_url)."/".$path,
-            array(
-                "user" => $this->user,
-                "pass" => $this->password
-            )
-        );
+        $call_url = ($this->base_url)."/".$path;
+
         $ch = curl_init($call_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
