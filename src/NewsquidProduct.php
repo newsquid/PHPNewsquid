@@ -29,8 +29,9 @@ class NewsquidProduct {
     } 
 
     public function __get($name) {
-        if($name == "id")
-            return $id;
+        if($name == "id") {
+            return $this->id;
+        }
     }
 
     public function hasChanged() {
