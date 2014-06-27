@@ -8,29 +8,42 @@
 class NewsquidTest extends PHPUnit_Framework_TestCase {
     
     /**
-     * @expectedException NewsquidException
+     * @expectedException RemoteCallerException
      */
     public function test_NoServer_ConnectFails() {
-        $nsq = new Newsquid("http://no.serv.er.exists.lol", "nil", "nil", true);
+        $caller = new CurlRemoteCaller("http://no.serv.er.exists.lol");
+        $nsq = new Newsquid($caller, "nil", "nil", true);
+        $nsq->getProduct(1);
+    }
+
+    /**
+     * @expectedException UnauthorizedException
+     */
+    public function test_CorrectServer_WrongUser_HTTP401() {
+        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
+        $nsq = new Newsquid($caller, "nousr", "wrongpass", true);
         $nsq->getProduct(1);
     }
 
     public function test_GetProduct_HTTP200() {
-        $nsq = new Newsquid("https://localhost:1337", "uid_test", "secret_test", true);
+        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
+        $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(1);
         $this->assertTrue(is_a($product, "NewsquidProduct"));
     }
 
     /**
-     * @expectedException ProductNotFoundException
+     * @expectedException NotFoundException
      */
     public function test_GetProduct_HTTP404() {
-        $nsq = new Newsquid("https://localhost:1337", "uid_test", "secret_test", true);
+        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
+        $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(9991928);
     }
 
     public function testGetAllUsers() {
-        $nsq = new Newsquid("https://localhost:1337", "uid_test", "secret_test");
+        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
+        $nsq = new Newsquid($caller, "uid_test", "secret_test");
         
         $nsq->getUsers();
     }
