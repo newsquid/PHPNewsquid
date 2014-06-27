@@ -11,7 +11,7 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_Product_HasChanged_Offline() {
-        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $this->empty_caller);
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->empty_caller);
 
         $this->assertFalse($prod->hasChanged());
 
@@ -25,12 +25,12 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
             "put" => function($path, $data) {}
         ));
 
-        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $indifferent_caller);
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $indifferent_caller);
         $prod->title = "Hello, World";
         
         $this->assertTrue($prod->hasChanged());
         
-        $prod->sync();
+        $prod->sync($this->some_user);
 
         $this->assertFalse($prod->hasChanged());
     }
@@ -46,9 +46,9 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
             }
         ));
 
-        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $monitoring_caller);
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $monitoring_caller);
 
-        $prod->sync();
+        $prod->sync($this->some_user);
 
         $this->assertFalse($put_called);
     }
@@ -66,11 +66,11 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
             }
         ));
 
-        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $grabbing_caller);
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $grabbing_caller);
 
         $prod->title = "Hello, World";
 
-        $prod->sync();
+        $prod->sync($this->some_user);
 
         $this->assertNotEmpty($data_put);
         $this->assertNotEmpty($data_put["product"]);
@@ -93,14 +93,14 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
             }
         ));
 
-        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $this->some_user, $grabbing_caller);
+        $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $grabbing_caller);
 
         $prod->title = "Hello, World";
         $prod->price = 0.0;
         $prod->currency = "DKK";
         $prod->url = "http://nsquid.co";
 
-        $prod->sync();
+        $prod->sync($this->some_user);
 
         $this->assertNotEmpty($data_put);
         $this->assertNotEmpty($data_put["product"]);

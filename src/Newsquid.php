@@ -29,7 +29,6 @@ class Newsquid {
             $price,
             $currency,
             $url,
-            $user,
             $this->newsquid_caller
         );
     }
@@ -43,7 +42,8 @@ class Newsquid {
             $data->title,
             $data->price,
             $data->currency,
-            $data->url
+            $data->url,
+            $this->newsquid_caller
         );
     }
 }

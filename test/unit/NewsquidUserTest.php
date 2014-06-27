@@ -25,7 +25,7 @@ class NewsquidUserTest extends PHPUnit_Framework_TestCase {
 
         $buyer = new NewsquidUser(13, "UserMan", "user@man.com", "tokenz", $grabbing_caller);
 
-        $prod = new NewsquidProduct(1, "Teetl", 10.0, "USD", "http://lo.com", $this->some_user, $grabbing_caller);
+        $prod = new NewsquidProduct(1, "Teetl", 10.0, "USD", "http://lo.com", $grabbing_caller);
 
         $buyer->buyProduct($prod);
 

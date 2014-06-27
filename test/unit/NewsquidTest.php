@@ -33,6 +33,38 @@ class NewsquidTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf("NewsquidProduct", $prod); 
         $this->assertTrue($post_called, "->post was not called");
     }
+
+    public function test_GetProduct() {
+        global $path_get;
+        $path_get = null;
+
+        $mocked_caller = new MockRemoteCaller(array(
+            "get" => function($path) {
+                global $path_get;
+                $path_get = $path;
+
+                return json_encode(array(
+                    "id" => 9,
+                    "title" => "test",
+                    "price" => 2,
+                    "currency" => "DKK",
+                    "url" => "http://test.nsquid.co"
+                ));
+            }
+        ));
+
+        $nsq = new Newsquid($mocked_caller, "app", "app_secret", true);
+
+        $prod = $nsq->getProduct(9);
+
+        $this->assertEquals("products/9", $path_get);
+        $this->assertInstanceOf("NewsquidProduct", $prod);
+        $this->assertEquals(9, $prod->id);
+        $this->assertEquals("test", $prod->title);
+        $this->assertEquals(2, $prod->price);
+        $this->assertEquals("DKK", $prod->currency);
+        $this->assertEquals("http://test.nsquid.co", $prod->url);
+    }
 }
 
 ?>

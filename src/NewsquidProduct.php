@@ -8,16 +8,14 @@ class NewsquidProduct {
     public $url;
 
     private $id;
-    private $owner;
     private $newsquid_caller;
 
-    public function __construct($id, $title, $price, $currency, $url, NewsquidUser $owner, RemoteCaller $newsquid_caller) {
+    public function __construct($id, $title, $price, $currency, $url, RemoteCaller $newsquid_caller) {
         $this->id = $id;
         $this->title = $title;
         $this->price = $price;
         $this->currency = $currency;
         $this->url = $url;
-        $this->owner = $owner;
         $this->newsquid_caller = $newsquid_caller;
 
         $this->last_synced = array(
@@ -42,7 +40,7 @@ class NewsquidProduct {
         return false;
     }
 
-    public function sync() {
+    public function sync(NewsquidUser $owner) {
         $to_sync = array();
 
         foreach($this->last_synced as $key => $val) {
@@ -53,7 +51,7 @@ class NewsquidProduct {
         if(!empty($to_sync)) {
             $data = array(
                 "product" => $to_sync,
-                "access_token" => $this->owner->token
+                "access_token" => $owner->token
             );
 
             $this->newsquid_caller->put("products/{$this->id}", $data);

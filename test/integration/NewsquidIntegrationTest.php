@@ -48,7 +48,7 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
     public function test_CreateProduct_HTTP200() {
         $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
         $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
-        $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn");
+        $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn", $caller);
         $product = $nsq->createProduct(999, "Hello, World", 1.0, "USD", "http://lol.com/5", $user);
     }
 }
