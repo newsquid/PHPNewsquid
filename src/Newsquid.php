@@ -11,10 +11,6 @@ class Newsquid {
         $this->newsquid_caller->insecure = $insecure;
     }
 
-    public function getProducts($user_token) {
-        throw new Exception("Not implemented");
-    }
-
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
         $this->newsquid_caller->post("products", array(
             "product" => array(
@@ -50,15 +46,6 @@ class Newsquid {
             $data->url
         );
     }
-
-    public function getUsers() {
-        throw new Exception("Not implemented");
-    }
-
-    public function getUser($id) {
-        throw new Exception("Not implemented");
-    }
-
 }
 
 ?>
