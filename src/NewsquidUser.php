@@ -29,6 +29,13 @@ class NewsquidUser {
             "access_token" => $this->token
         ));
     }
+
+    public function canAccessProduct(NewsquidProduct $product) {
+        $result = $this->newsquid_caller->get("consumer/access/{$product->id}?access_token={$this->token}");
+
+        $data = json_decode($result);
+        return $data->access;
+    }
 }
 
 ?>

@@ -36,6 +36,28 @@ class NewsquidUserTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $data_post["product"]["sku"]);
     }
 
+    public function test_NewsquidUser_CanAccessProduct_Fail() {
+        global $path_get;
+        $path_get = null;
+
+        $mocked_caller = new MockRemoteCaller(array(
+            "get" => function($path) {
+                global $path_get;
+                $path_get = $path;
+
+                return '{"reason":"no", "price": "10.0", "currency":"USD","access":false}';
+            }
+        ));
+
+        $prod = new NewsquidProduct(3, "ehl", 10.0, "USD", "www.lolo.c", $mocked_caller);
+        $user = new NewsquidUser(1, "usr", "usr@mail.usr", "token", $mocked_caller);
+
+        $can_access = $user->canAccessProduct($prod);
+
+        $this->assertFalse($can_access);
+        $this->assertEquals("consumer/access/3?access_token=token", $path_get);
+    }
+
 }
 
 ?>
