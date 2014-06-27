@@ -30,6 +30,10 @@ class NewsquidUserTest extends PHPUnit_Framework_TestCase {
         $buyer->buyProduct($prod);
 
         $this->assertEquals("consumer/orders", $path_post);
+
+        $this->assertNotEmpty($data_post);
+        $this->assertEquals("tokenz", $data_post["access_token"]);
+        $this->assertEquals(1, $data_post["product"]["sku"]);
     }
 
 }
