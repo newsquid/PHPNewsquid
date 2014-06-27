@@ -22,7 +22,6 @@ class CurlRemoteCaller implements RemoteCaller {
                 "user" => $this->user,
                 "pass" => $this->password
             ));
-
         }
 
         if($name == "insecure") {
