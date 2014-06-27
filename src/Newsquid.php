@@ -16,7 +16,7 @@ class Newsquid {
     }
 
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
-        $result = $this->newsquid_caller->post("products", array(
+        $this->newsquid_caller->post("products", array(
             "product" => array(
                 "sku" => $id,
                 "url" => $url,
@@ -32,7 +32,9 @@ class Newsquid {
             $title,
             $price,
             $currency,
-            $url
+            $url,
+            $user,
+            $this->newsquid_caller
         );
     }
 

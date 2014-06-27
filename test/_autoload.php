@@ -10,4 +10,6 @@ function nsq_test_autoload($class_name) {
 
 spl_autoload_register("nsq_test_autoload");
 
+require_once "test/MockRemoteCaller.php";
+
 ?>

@@ -3,9 +3,9 @@
 class NewsquidUser {
 
     private $id;
-    private $name;
-    private $email;
-    private $token;
+    public $name;
+    public $email;
+    public $token;
 
     public function __construct($id, $name, $email, $token) {
         $this->id = $id;
