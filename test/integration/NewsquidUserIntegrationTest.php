@@ -23,12 +23,12 @@ class NewsquidUserIntegrationTest extends PHPUnit_Framework_TestCase {
     public function test_NewsquidUser_logInUri_Correct() {
         $uri = $this->writer_one->logInUri("http://back.to.me");
 
-        $this->assertTrue(strpos($uri,'https://localhost:1337/oauth/authorize') === 0, "Wrong beginning of uri!");
+        $this->assertTrue(strpos($uri,'https://localhost:1337/oauth/authorize') === 0, "Wrong beginning of uri in $uri");
 
-        $this->assertTrue(strpos($uri,'client_id=uid_test') !== false, "Wrong or missing client id in uri");
-        $this->assertTrue(strpos($uri,'redirect_uri=http://back.to.me') !== false, "Wrong or missing redirect uri in uri");
-        $this->assertTrue(strpos($uri,'response_type=code') !== false, "Wrong or missing response type in uri");
-        $this->assertTrue(strpos($uri,'scope=login') !== false, "Wrong or missing scope in uri");
+        $this->assertTrue(strpos($uri,'client_id=uid_test') !== false, "Wrong or missing client id in uri $uri");
+        $this->assertTrue(strpos($uri,'redirect_uri=http://back.to.me') !== false, "Wrong or missing redirect uri in uri $uri");
+        $this->assertTrue(strpos($uri,'response_type=code') !== false, "Wrong or missing response type in uri $uri");
+        $this->assertTrue(strpos($uri,'scope=login') !== false, "Wrong or missing scope in uri $uri");
     }
 
     public function test_NewsquidUser_CanAccessProduct_Fail() {

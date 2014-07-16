@@ -24,7 +24,7 @@ class NewsquidUser {
     public function logInUri($redirectUri) {
         $scopes = "login"; //TODO: Should not be so specific/limited.
        
-        return $this->newsquid_caller->clientUrl("/oauth/authorize", array(
+        return $this->newsquid_caller->clientUrl("oauth/authorize", array(
             "redirect_uri" => $redirectUri,
             "response_type" => "code",
             "scope" => $scopes
