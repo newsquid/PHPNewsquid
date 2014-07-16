@@ -38,6 +38,25 @@ class CurlRemoteCaller implements RemoteCaller {
         }
     }
 
+    public function clientUrl($path, $query = array()) {
+        $result = http_build_url($this->base_url, array(), HTTP_URL_STRIP_USER | HTTP_URL_STRIP_PASS).$path;
+        
+        $query["client_id"] = $this->user;
+
+        $first_value = true;
+        foreach($query as $key => $value) {
+            if($first_value) {
+                $result .= "?".$key."=".$value;
+                $first_value = false;
+            }
+            else {
+                $result .= "&".$key."=".$value;
+            }
+        }
+
+        return $result;
+    }
+
     public function get($path) {
         $call_url = ($this->base_url)."/".$path;
         $this->curl->get($call_url);

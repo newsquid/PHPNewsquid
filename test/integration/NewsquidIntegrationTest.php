@@ -7,6 +7,12 @@
  */
 class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
     
+    private $local_caller;
+
+    public function setUp() {
+        $this->local_caller = new CurlRemoteCaller("https://localhost:1337");
+    }
+
     /**
      * @expectedException RemoteCallerException
      */
@@ -20,14 +26,12 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
      * @expectedException UnauthorizedException
      */
     public function test_CorrectServer_WrongUser_HTTP401() {
-        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
-        $nsq = new Newsquid($caller, "nousr", "wrongpass", true);
+        $nsq = new Newsquid($this->local_caller, "nousr", "wrongpass", true);
         $nsq->getProduct(1);
     }
 
     public function test_GetProduct_HTTP200() {
-        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
-        $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
+        $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(1);
         $this->assertTrue(is_a($product, "NewsquidProduct"));
     }
@@ -36,8 +40,7 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
      * @expectedException NotFoundException
      */
     public function test_GetProduct_HTTP404() {
-        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
-        $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
+        $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(9991928);
     }
 
@@ -46,9 +49,8 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
      * already exists...
      */
     public function test_CreateProduct_HTTP200() {
-        $caller = new CurlRemoteCaller("https://localhost:1337/api/v2");
-        $nsq = new Newsquid($caller, "uid_test", "secret_test", true);
-        $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn", $caller);
+        $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
+        $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn", $this->local_caller);
         $product = $nsq->createProduct(999, "Hello, World", 1.0, "USD", "http://lol.com/5", $user);
     }
 }

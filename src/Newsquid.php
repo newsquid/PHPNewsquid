@@ -12,7 +12,7 @@ class Newsquid {
     }
 
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
-        $this->newsquid_caller->post("products", array(
+        $this->newsquid_caller->post("api/v2/products", array(
             "product" => array(
                 "sku" => $id,
                 "url" => $url,
@@ -34,7 +34,7 @@ class Newsquid {
     }
 
     public function getProduct($id) {
-        $result = $this->newsquid_caller->get("products/$id");
+        $result = $this->newsquid_caller->get("api/v2/products/$id");
 
         $data = json_decode($result);
         return new NewsquidProduct(

@@ -11,7 +11,7 @@ class NewsquidTest extends PHPUnit_Framework_TestCase {
                 global $post_called;
                 $post_called = true;
 
-                if($path != "products")
+                if($path != "api/v2/products")
                     throw new Exception("Wrong path called ($path)");
                 if(!is_array($data))
                     throw new Exception("data is now an array!");
@@ -57,7 +57,7 @@ class NewsquidTest extends PHPUnit_Framework_TestCase {
 
         $prod = $nsq->getProduct(9);
 
-        $this->assertEquals("products/9", $path_get);
+        $this->assertEquals("api/v2/products/9", $path_get);
         $this->assertInstanceOf("NewsquidProduct", $prod);
         $this->assertEquals(9, $prod->id);
         $this->assertEquals("test", $prod->title);

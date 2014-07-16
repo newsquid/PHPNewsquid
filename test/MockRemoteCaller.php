@@ -8,6 +8,10 @@ class MockRemoteCaller implements RemoteCaller {
         $this->overrides = $overrides;
     }
 
+    public function clientUrl($path, $query = array()) {
+        return $this->overrides["clientUrl"]($path, $query);
+    }
+
     public function get($path) {
         return $this->overrides["get"]($path);
     }

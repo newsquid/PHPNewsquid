@@ -21,8 +21,19 @@ class NewsquidUser {
             return $this->$name;
     }
 
+    public function logInUri($redirectUri) {
+        $scopes = "login"; //TODO: Should not be so specific/limited.
+       
+        return $this->newsquid_caller->clientUrl("/oauth/authorize", array(
+            "redirect_uri" => $redirectUri,
+            "response_type" => "code",
+            "scope" => $scopes
+        ));
+        
+    }
+
     public function buyProduct(NewsquidProduct $product) {
-        $this->newsquid_caller->post("consumer/orders", array(
+        $this->newsquid_caller->post("api/v2/consumer/orders", array(
             "product" => array(
                 "sku" => $product->id
             ),
@@ -32,9 +43,12 @@ class NewsquidUser {
 
     public function canAccessProduct(NewsquidProduct $product) {
         try {
-            $result = $this->newsquid_caller->get("consumer/access/{$product->id}?access_token={$this->token}");
+            $result = $this->newsquid_caller->get("api/v2/consumer/access/{$product->id}?access_token={$this->token}");
         }
         catch(PaymentRequiredException $e) {
+            return false;
+        }
+        catch(UnauthorizedException $e) {
             return false;
         }
 
