@@ -39,38 +39,52 @@ class CurlRemoteCaller implements RemoteCaller {
     }
 
     public function clientUrl($path, $query = array()) {
-        $result = http_build_url($this->base_url, array(), HTTP_URL_STRIP_USER | HTTP_URL_STRIP_PASS).$path;
-        
+        if(!isset($this->user))
+            throw new LogicException("No client set; cannot generate client url. Please set CurlRemoteCaller->user.");
+
         $query["client_id"] = $this->user;
 
         $first_value = true;
+        $q = "";
         foreach($query as $key => $value) {
             if($first_value) {
-                $result .= "?".$key."=".$value;
+                $q .= $key."=".$value;
                 $first_value = false;
             }
             else {
-                $result .= "&".$key."=".$value;
+                $q .= "&".$key."=".$value;
             }
         }
+
+        $result = http_build_url($this->base_url, array(), HTTP_URL_STRIP_USER | HTTP_URL_STRIP_PASS);
+        $result = http_build_url($result, array(
+            'path' => '/'.$path,
+            'query' => $q
+        ));
 
         return $result;
     }
 
     public function get($path) {
-        $call_url = ($this->base_url)."/".$path;
+        $call_url = http_build_url($this->base_url, array(
+            "path" => '/'.$path
+        ));
         $this->curl->get($call_url);
         return $this->handleResult($call_url, $this->curl->raw_response);
     }
 
     public function post($path, $data = array()) {
-        $call_url = ($this->base_url)."/".$path;
+        $call_url = http_build_url($this->base_url, array(
+            "path" => '/'.$path
+        ));
         $this->curl->post($call_url, $data);
         return $this->handleResult($call_url, $this->curl->raw_response);
     }
 
     public function put($path, $data = array()) {
-        $call_url = ($this->base_url)."/".$path;
+        $call_url = http_build_url($this->base_url, array(
+            "path" => '/'.$path
+        ));
         $this->curl->put($call_url, $data);
         return $this->handleResult($call_url, $this->curl->raw_response);
     }
