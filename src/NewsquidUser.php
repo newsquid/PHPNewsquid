@@ -21,17 +21,6 @@ class NewsquidUser {
             return $this->$name;
     }
 
-    public function logInUri($redirectUri) {
-        $scopes = "login"; //TODO: Should not be so specific/limited.
-       
-        return $this->newsquid_caller->clientUrl("oauth/authorize", array(
-            "redirect_uri" => $redirectUri,
-            "response_type" => "code",
-            "scope" => $scopes
-        ));
-        
-    }
-
     public function buyProduct(NewsquidProduct $product) {
         $this->newsquid_caller->post("api/v2/consumer/orders", array(
             "product" => array(

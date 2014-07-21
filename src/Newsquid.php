@@ -11,6 +11,17 @@ class Newsquid {
         $this->newsquid_caller->insecure = $insecure;
     }
 
+    public function logInUri($redirectUri) {
+        $scopes = "login"; //TODO: Should not be so specific/limited.
+       
+        return $this->newsquid_caller->clientUrl("oauth/authorize", array(
+            "redirect_uri" => $redirectUri,
+            "response_type" => "code",
+            "scope" => $scopes
+        ));
+        
+    }
+
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
         $this->newsquid_caller->post("api/v2/products", array(
             "product" => array(
