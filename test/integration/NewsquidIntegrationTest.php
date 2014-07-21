@@ -30,6 +30,18 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
         $nsq->getProduct(1);
     }
 
+    public function test_NewsquidUser_logInUri_Correct() {
+        $newsquid = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
+        $uri = $newsquid->logInUri("http://back.to.me");
+
+        $this->assertTrue(strpos($uri,'https://localhost:1337/oauth/authorize') === 0, "Wrong beginning of uri in $uri");
+
+        $this->assertTrue(strpos($uri,'client_id=uid_test') !== false, "Wrong or missing client id in uri $uri");
+        $this->assertTrue(strpos($uri,'redirect_uri=http://back.to.me') !== false, "Wrong or missing redirect uri in uri $uri");
+        $this->assertTrue(strpos($uri,'response_type=code') !== false, "Wrong or missing response type in uri $uri");
+        $this->assertTrue(strpos($uri,'scope=login') !== false, "Wrong or missing scope in uri $uri");
+    }
+
     public function test_GetProduct_HTTP200() {
         $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(1);
@@ -39,7 +51,7 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException NotFoundException
      */
-    public function test_GetProduct_HTTP404() {
+    public function test_GetProduct_DoesntExist_HTTP404() {
         $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $product = $nsq->getProduct(9991928);
     }
@@ -48,9 +60,15 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
      * Currently requires clean setup of newsquid server (otherwise product
      * already exists...
      */
-    public function test_CreateProduct_HTTP200() {
+    public function test_NewsquidUser_CreateProduct_VerifyExistence() {
         $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn", $this->local_caller);
         $product = $nsq->createProduct(999, "Hello, World", 1.0, "USD", "http://lol.com/5", $user);
+
+        $product_get = $nsq->getProduct(999);
+        $this->assertEquals($product->title, $product_get->title);
+        $this->assertEquals($product->price, $product_get->price);
+        $this->assertEquals($product->currency, $product_get->currency);
+        $this->assertEquals($product->url, $product_get->url);
     }
 }
