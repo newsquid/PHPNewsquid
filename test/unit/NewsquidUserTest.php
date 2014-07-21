@@ -30,7 +30,7 @@ class NewsquidUserTest extends PHPUnit_Framework_TestCase {
         $uri = $buyer->logInUri("http://back.to.me");
 
         $this->assertEquals("correct_uri", $uri);
-        $this->assertEquals("/oauth/authorize", $path_grab);
+        $this->assertEquals("oauth/authorize", $path_grab);
         $this->assertEquals("http://back.to.me", $query_grab["redirect_uri"]);
         $this->assertEquals("login", $query_grab["scope"]);
         $this->assertEquals("code", $query_grab["response_type"]);
