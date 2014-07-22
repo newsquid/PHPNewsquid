@@ -29,7 +29,7 @@ class NewsquidTest extends PHPUnit_Framework_TestCase {
         $nsq = new Newsquid($caller, "user", "pass", true);
         $user = new NewsquidUser(1337, "USR", "USR@USR.com", "token", $caller);
         $prod = $nsq->createProduct(1, "Hello", 10, "USD", "http://gog.com", $user);
-       
+
         $this->assertInstanceOf("NewsquidProduct", $prod); 
         $this->assertTrue($post_called, "->post was not called");
     }

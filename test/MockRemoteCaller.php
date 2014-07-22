@@ -1,7 +1,7 @@
 <?php
 
 class MockRemoteCaller implements RemoteCaller {
-    
+
     private $overrides;
 
     public function __construct($overrides = array()) {

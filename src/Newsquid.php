@@ -1,7 +1,7 @@
 <?php
 
 class Newsquid {
-    
+
     private $newsquid_caller;
 
     public function __construct(RemoteCaller $newsquid_caller, $uid, $secret, $insecure = false) {
@@ -13,13 +13,13 @@ class Newsquid {
 
     public function logInUri($redirectUri) {
         $scopes = "login"; //TODO: Should not be so specific/limited.
-       
+
         return $this->newsquid_caller->clientUrl("oauth/authorize", array(
             "redirect_uri" => $redirectUri,
             "response_type" => "code",
             "scope" => $scopes
         ));
-        
+
     }
 
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {

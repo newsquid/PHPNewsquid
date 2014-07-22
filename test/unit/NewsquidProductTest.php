@@ -1,7 +1,7 @@
 <?php
 
 class NewsquidProductTest extends PHPUnit_Framework_TestCase {
-    
+
     private $empty_caller;
     private $some_user;
 
@@ -27,9 +27,9 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
 
         $prod = new NewsquidProduct(1, "Yolo", 10.0, "USD", "http://lol.com", $indifferent_caller);
         $prod->title = "Hello, World";
-        
+
         $this->assertTrue($prod->hasChanged());
-        
+
         $prod->sync($this->some_user);
 
         $this->assertFalse($prod->hasChanged());
