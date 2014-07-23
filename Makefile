@@ -2,7 +2,7 @@
 
 PHPUNIT=docker run -v `pwd`:/var/www agallou/phpunit
 
-test: test_unit test_integration
+test: test_unit
 
 test_unit:
 	$(PHPUNIT) --bootstrap test/_autoload.php test/unit
