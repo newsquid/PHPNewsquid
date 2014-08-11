@@ -57,6 +57,29 @@ class Newsquid {
             $this->newsquid_caller
         );
     }
+
+
+    /**
+     * Redirect the user to the Newsquid authentication page
+     */
+    public function authenticate(){
+        //Redirect the user to newsquid auth
+    }
+
+    /**
+     * Gets the current Newsquid user
+     * Returns a NewsquidUser if the user is logged in
+     * Returns false if the user is not logged in
+     */
+    public function getCurrentUser(){
+        //Check for user in cookies
+        //Is the cookie valid?
+        
+        //Check for token in URL and create user
+        //Set the user cookies
+
+        //Return false if not authenticated
+    }
 }
 
 ?>

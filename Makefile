@@ -17,7 +17,7 @@ start_nsqor:
 	docker run -d --name nsqor_test --link nsqor_test_db:db \
 		-e DB_NAME=nsq_test -e DB_HOST=db \
 		-e DB_USER=nsq -e DB_PASS=nsq -p 1337 \
-		nsqor make tt_test
+		index.ouchmg.com/nsqor make tt_test
 	./wait_for_nsqor.sh
 
 
