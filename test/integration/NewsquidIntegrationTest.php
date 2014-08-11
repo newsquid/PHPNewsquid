@@ -10,7 +10,8 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
     private $local_caller;
 
     public function setUp() {
-        $this->local_caller = new CurlRemoteCaller("https://localhost:1337");
+        $this->local_caller = new CurlRemoteCaller("https://".
+		getenv('NSQOR_PORT_1337_TCP_ADDR').":".getenv('NSQOR_PORT_1337_TCP_PORT'));
     }
 
     /**
@@ -34,7 +35,9 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
         $newsquid = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
         $uri = $newsquid->logInUri("http://back.to.me");
 
-        $this->assertTrue(strpos($uri,'https://localhost:1337/oauth/authorize') === 0, "Wrong beginning of uri in $uri");
+	$this->assertTrue(strpos($uri,'https://'.
+		getenv('NSQOR_PORT_1337_TCP_ADDR').":".getenv('NSQOR_PORT_1337_TCP_PORT').
+		'/oauth/authorize') === 0, "Wrong beginning of uri in $uri");
 
         $this->assertTrue(strpos($uri,'client_id=uid_test') !== false, "Wrong or missing client id in uri $uri");
         $this->assertTrue(strpos($uri,'redirect_uri=http://back.to.me') !== false, "Wrong or missing redirect uri in uri $uri");

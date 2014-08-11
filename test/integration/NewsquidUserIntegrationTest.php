@@ -8,7 +8,8 @@ class NewsquidUserIntegrationTest extends PHPUnit_Framework_TestCase {
     private $newsquid;
 
     public function setUp() {
-        $this->newsquid_caller = new CurlRemoteCaller("https://localhost:1337");
+	    $this->newsquid_caller = new CurlRemoteCaller("https://".
+		getenv('NSQOR_PORT_1337_TCP_ADDR').":".getenv('NSQOR_PORT_1337_TCP_PORT'));
 
         $this->newsquid = new Newsquid($this->newsquid_caller, "uid_test", "secret_test", true);
 
