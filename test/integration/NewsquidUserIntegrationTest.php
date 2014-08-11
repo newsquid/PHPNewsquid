@@ -14,7 +14,7 @@ class NewsquidUserIntegrationTest extends PHPUnit_Framework_TestCase {
         $this->newsquid = new Newsquid($this->newsquid_caller, "uid_test", "secret_test", true);
 
         $this->reader_one = new NewsquidUser(1, "reader_one", "reader_one@trunktrunk.org", "50c9ff9c351783ef57a1a85ae36c0537cee49bfaf409bd785721a8e2e0207c77", $this->newsquid_caller);
-        $this->writer_one = new NewsquidUser(2, "writer_one", "writer_one@trunktrunk.org", "40c9ff9c351783ef57a1a85ae36c0537cee49bfaf409bd785721a8e2e0207c77", $this->newsquid_caller);
+        $this->writer_one = new NewsquidUser(2, "writer_one", "writer_one@trunktrunk.org", "60c9ff9c351783ef57a1a85ae36c0537cee49bfaf409bd785721a8e2e0207c77", $this->newsquid_caller);
 
         //Product owned by writer_one
         $this->product_one = new NewsquidProduct(1, "product_one", 11, "USD", "url_one", $this->newsquid_caller);

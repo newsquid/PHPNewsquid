@@ -72,7 +72,7 @@ class Newsquid {
      * Returns false if the user is not logged in
      */
     public function getCurrentUser(){
-        //Check for user in cookies
+        //Check for token in cookies
         //Is the cookie valid?
         
         //Check for token in URL and create user
