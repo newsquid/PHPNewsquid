@@ -58,27 +58,29 @@ class Newsquid {
         );
     }
 
-
-    /**
-     * Redirect the user to the Newsquid authentication page
-     */
-    public function authenticate(){
-        //Redirect the user to newsquid auth
-    }
-
     /**
      * Gets the current Newsquid user
      * Returns a NewsquidUser if the user is logged in
      * Returns false if the user is not logged in
      */
-    public function getCurrentUser(){
-        //Check for token in cookies
-        //Is the cookie valid?
-        
-        //Check for token in URL and create user
-        //Set the user cookies
-
+    public function getCurrentUser($token){
         //Return false if not authenticated
+        try {
+            $result = $this->newsquid_caller->get("api/v2/consumer?access_token=$token");
+
+            $data = json_decode($result);
+
+            return new NewsquidUser(
+                $data->id,
+                $data->name,
+                $data->email,
+                $token,
+                $this->newsquid_caller
+            );
+        }catch(UnauthorizedException $e){
+            return false;
+        }
+
     }
 }
 

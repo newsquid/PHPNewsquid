@@ -102,7 +102,7 @@ class CurlRemoteCaller implements RemoteCaller {
                     case 402:
                         throw new PaymentRequiredException("Payment required to access content at $call_url.\nReturned:\n".substr($result,0,100)."...");
                     case 404:
-                        throw new NotFoundException("Request not found: $call_url.\nReturned:\n".substr($result,0,100)."...");
+                        throw new NotFoundException("Request not found: $call_url.\nReturned:\n".substr($result,0,5000)."...");
                     default:
                         throw new ClientErrorException("A client error (".$this->curl->error_code.") occured while calling $call_url.\nReturned:\n".substr($result,0,100)."...");
                 }

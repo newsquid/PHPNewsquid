@@ -65,7 +65,7 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
      */
     public function test_NewsquidUser_CreateProduct_VerifyExistence() {
         $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
-        $user = new NewsquidUser(2, "wrier_one", "writer_one@mail.com", "johnjohn", $this->local_caller);
+        $user = new NewsquidUser(2, "wrier_one", "writer_one@trunktrunk.org", "johnjohn", $this->local_caller);
         $product = $nsq->createProduct(999, "Hello, World", 1.0, "USD", "http://lol.com/5", $user);
 
         $product_get = $nsq->getProduct(999);
@@ -73,5 +73,15 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($product->price, $product_get->price);
         $this->assertEquals($product->currency, $product_get->currency);
         $this->assertEquals($product->url, $product_get->url);
+    }
+
+    public function test_Newsquid_getCurrentUser() {
+        $token = "60c9ff9c351783ef57a1a85ae36c0537cee49bfaf409bd785721a8e2e0207c77";
+        $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
+        $user = $nsq->getCurrentUser($token);
+        $this->assertEquals(2, $user->id);
+        $this->assertEquals("writer_one", $user->name);
+        $this->assertEquals("writer_one@trunktrunk.org", $user->email);
+        $this->assertEquals($token, $user->token);
     }
 }
