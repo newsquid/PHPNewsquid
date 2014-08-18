@@ -8,4 +8,3 @@ class NewsquidException extends Exception {
 
 }
 
-?>

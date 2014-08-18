@@ -1,4 +1,5 @@
 <?php
+require_once "RemoteCallerException.php";
 
 class AccessDeniedException extends RemoteCallerException {
 
@@ -8,4 +9,3 @@ class AccessDeniedException extends RemoteCallerException {
 
 }
 
-?>

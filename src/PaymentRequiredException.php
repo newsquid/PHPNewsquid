@@ -6,4 +6,3 @@ class PaymentRequiredException extends RemoteCallerException {
     }
 }
 
-?>

@@ -6,4 +6,3 @@ class UnauthorizedException extends RemoteCallerException {
     }
 }
 
-?>

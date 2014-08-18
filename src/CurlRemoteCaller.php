@@ -1,4 +1,6 @@
 <?php
+require_once "RemoteCallerException.php";
+require_once "RemoteCaller.php";
 
 class CurlRemoteCaller implements RemoteCaller {
 
@@ -117,4 +119,3 @@ class CurlRemoteCaller implements RemoteCaller {
 
 }
 
-?>

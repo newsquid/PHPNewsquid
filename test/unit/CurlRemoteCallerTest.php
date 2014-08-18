@@ -1,5 +1,7 @@
 <?php
 
+require_once "src/CurlRemoteCaller.php";
+
 class CurlRemoteCallerTest extends PHPUnit_Framework_TestCase {
 
     /**

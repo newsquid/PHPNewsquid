@@ -6,4 +6,3 @@ class NotFoundException extends RemoteCallerException {
     }
 }
 
-?>

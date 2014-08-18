@@ -1,5 +1,10 @@
 <?php
 
+require_once "src/NewsquidUser.php";
+require_once "src/NewsquidProduct.php";
+require_once "src/Newsquid.php";
+require_once "src/PaymentRequiredException.php";
+
 class NewsquidProductTest extends PHPUnit_Framework_TestCase {
 
     private $empty_caller;

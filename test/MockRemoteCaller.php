@@ -1,4 +1,5 @@
 <?php
+require_once "src/RemoteCaller.php";
 
 class MockRemoteCaller implements RemoteCaller {
 

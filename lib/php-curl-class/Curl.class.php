@@ -558,4 +558,3 @@ class CaseInsensitiveArray implements \ArrayAccess, \Countable, \Iterator
     }
 }
 
-?>

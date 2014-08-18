@@ -6,4 +6,3 @@ class ServerErrorException extends RemoteCallerException {
     }
 }
 
-?>

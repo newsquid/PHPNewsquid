@@ -1,6 +1,10 @@
 <?php
 
-class Newsquid {
+function NewsquidText() {
+    return "Test";
+}
+
+Class Newsquid {
 
     private $newsquid_caller;
 
@@ -82,6 +86,9 @@ class Newsquid {
         }
 
     }
+
+    public function text(){
+        return "THIS IS TEXT SPEAKING";
+    }
 }
 
-?>
