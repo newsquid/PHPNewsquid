@@ -6,16 +6,18 @@ class NewsquidProduct {
     public $price;
     public $currency;
     public $url;
+    public $nsq_item_id;
 
     private $id;
     private $newsquid_caller;
 
-    public function __construct($id, $title, $price, $currency, $url, RemoteCaller $newsquid_caller) {
+    public function __construct($id, $title, $price, $currency, $url, $nsq_item_id, RemoteCaller $newsquid_caller) {
         $this->id = $id;
         $this->title = $title;
         $this->price = $price;
         $this->currency = $currency;
         $this->url = $url;
+        $this->nsq_item_id = $nsq_item_id;
         $this->newsquid_caller = $newsquid_caller;
 
         $this->last_synced = array(

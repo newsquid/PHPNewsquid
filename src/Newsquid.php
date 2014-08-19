@@ -22,7 +22,7 @@ Class Newsquid {
     }
 
     public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
-        $this->newsquid_caller->post("api/v2/products", array(
+        $nsqproduct = $this->newsquid_caller->post("api/v2/products", array(
             "product" => array(
                 "sku" => $id,
                 "url" => $url,
@@ -33,12 +33,15 @@ Class Newsquid {
             "access_token" => $user->token
         ));
 
+        $data = json_decode($nsqproduct);
+
         return new NewsquidProduct(
             $id,
             $title,
             $price,
             $currency,
             $url,
+            $data->nsq_item_id,
             $this->newsquid_caller
         );
     }
@@ -53,6 +56,7 @@ Class Newsquid {
             $data->price,
             $data->currency,
             $data->url,
+            $data->nsq_item_id,
             $this->newsquid_caller
         );
     }
