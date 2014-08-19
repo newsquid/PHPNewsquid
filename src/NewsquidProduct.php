@@ -54,7 +54,7 @@ class NewsquidProduct {
                 "access_token" => $owner->token
             );
 
-            $this->newsquid_caller->put("products/{$this->id}", $data);
+            $this->newsquid_caller->put("api/v2/products/{$this->id}", $data);
 
             foreach($to_sync as $key => $val)
                 $this->last_synced[$key] = $val;

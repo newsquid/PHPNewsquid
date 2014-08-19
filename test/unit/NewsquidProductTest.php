@@ -82,7 +82,7 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
         $this->assertArrayHasKey("title", $data_put["product"]);
         $this->assertContains("Hello, World", $data_put["product"]);
 
-        $this->assertEquals($path_put, "products/1");
+        $this->assertEquals($path_put, "api/v2/products/1");
     }
 
     public function test_ProductSync_ChangedEverything() {
@@ -118,7 +118,7 @@ class NewsquidProductTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("DKK", $data_put["product"]["currency"]);
         $this->assertEquals("http://nsquid.co", $data_put["product"]["url"]);
 
-        $this->assertEquals($path_put, "products/1");
+        $this->assertEquals($path_put, "api/v2/products/1");
     }
 }
 
