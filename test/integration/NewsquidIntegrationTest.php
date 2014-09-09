@@ -84,4 +84,15 @@ class NewsquidIntegrationTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("writer_one@trunktrunk.org", $user->email);
         $this->assertEquals($token, $user->token);
     }
+
+    public function test_Newsquid_getAccessToken(){
+        $grant = "grant1";
+        $nsq = new Newsquid($this->local_caller, "uid_test", "secret_test", true);
+
+        $token = $nsq->getAccessToken($grant,"http://localhost");
+        $user = $nsq->getCurrentUser($token);
+        $this->assertNotEquals($user,false);
+    }
+
 }
+# vim: set ts=4 sw=4 et:
