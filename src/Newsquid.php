@@ -82,6 +82,21 @@ class Newsquid {
         }
 
     }
+
+    /**
+     * Given a oauth grant this functions gets and access token from the server
+     */
+    public function getAccessToken($grant_code,$return_url){
+        $result = $this->newsquid_caller->post("oauth/token",array(
+            "grant_type" => "authorization_code",
+            "code" => $grant_code,
+            "redirect_uri" => $return_url));
+
+        $data = json_decode($result);
+
+        return $data["access_token"];
+    }
 }
 
 ?>
+# vim: set ts=4 sw=4 et:
