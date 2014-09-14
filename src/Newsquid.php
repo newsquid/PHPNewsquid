@@ -97,7 +97,7 @@ Class Newsquid {
 
         $data = json_decode($result);
 
-        return $data["access_token"];
+        return $data->access_token;
     }
 }
 
