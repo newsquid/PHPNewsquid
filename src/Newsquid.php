@@ -21,17 +21,25 @@ Class Newsquid {
 
     }
 
-    public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user) {
-        $nsqproduct = $this->newsquid_caller->post("api/v2/products", array(
-            "product" => array(
+    public function createProduct($id, $title, $price, $currency, $url, NewsquidUser $user, $product_owner_email = NULL) {
+        $product = array(
                 "sku" => $id,
                 "url" => $url,
                 "currency" => $currency,
                 "price" => $price,
                 "title" => $title
-            ),
+        );
+
+        $params = array(
+            "product" => $product,
             "access_token" => $user->token
-        ));
+        );
+
+        if ($product_owner_email != NULL) {
+            $params["product_owner_email"] = $product_owner_email;
+        }
+
+        $nsqproduct = $this->newsquid_caller->post("api/v2/products", $params);
 
         $data = json_decode($nsqproduct);
 
