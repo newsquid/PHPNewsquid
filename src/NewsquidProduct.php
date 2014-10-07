@@ -42,25 +42,26 @@ class NewsquidProduct {
         return false;
     }
 
-    public function sync(NewsquidUser $owner) {
+    public function sync(NewsquidUser $owner, $product_owner_email = NULL) {
         $to_sync = array();
 
         foreach($this->last_synced as $key => $val) {
-            if($this->$key != $val)
-                $to_sync[$key] = $this->$key;
+            $to_sync[$key] = $this->$key;
         }
 
-        if(!empty($to_sync)) {
-            $data = array(
-                "product" => $to_sync,
-                "access_token" => $owner->token
-            );
+        $data = array(
+            "product" => $to_sync,
+            "access_token" => $owner->token
+        );
 
-            $this->newsquid_caller->put("api/v2/products/{$this->id}", $data);
-
-            foreach($to_sync as $key => $val)
-                $this->last_synced[$key] = $val;
+        if ($product_owner_email != NULL) {
+            $data["product_owner_email"] = $product_owner_email;
         }
+
+        $this->newsquid_caller->put("api/v2/products/{$this->id}", $data);
+
+        foreach($to_sync as $key => $val)
+            $this->last_synced[$key] = $val;
     }
 }
 
